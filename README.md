@@ -14,7 +14,7 @@ To load custom characters instead:
 
 ```diff
 - clients: [],
-+ clients: [Clients.TWITTER, Clients.DISCORD],
++ clients: [Clients.TELEGRAM],
 ```
 
 ## Duplicate the .env.example template
@@ -28,13 +28,11 @@ cp .env.example .env
 ### Add login credentials and keys to .env
 
 ```diff
--DISCORD_APPLICATION_ID=
--DISCORD_API_TOKEN= # Bot token
-+DISCORD_APPLICATION_ID="000000772361146438"
-+DISCORD_API_TOKEN="OTk1MTU1NzcyMzYxMT000000.000000.00000000000000000000000000000000"
+-TELEGRAM_BOT_TOKEN= # Bot token
++TELEGRAM_BOT_TOKEN="6666666666:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA-FFFF"
 ...
--OPENROUTER_API_KEY=
-+OPENROUTER_API_KEY="sk-xx-xx-xxx"
+-AKASH_CHAT_API_KEY=
++AKASH_CHAT_API_KEY="sk-xxxxxxx"
 ...
 -TWITTER_USERNAME= # Account username
 -TWITTER_PASSWORD= # Account password
