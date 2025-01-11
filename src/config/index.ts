@@ -1,5 +1,5 @@
 
-import { Character, ModelProviderName, settings, validateCharacterConfig } from "@elizaos/core";
+import { Character, elizaLogger, ModelProviderName, settings, validateCharacterConfig } from "@elizaos/core";
 import fs from "fs";
 import path from "path";
 import yargs from "yargs";
@@ -59,13 +59,27 @@ export async function loadCharacters(
 export function getTokenForProvider(
   provider: ModelProviderName,
   character: Character
-) {
+): string {
   switch (provider) {
+    // no key needed for llama_local or gaianet
+    case ModelProviderName.LLAMALOCAL:
+      return "";
+    case ModelProviderName.OLLAMA:
+      return "";
+    case ModelProviderName.GAIANET:
+      return "";
     case ModelProviderName.OPENAI:
       return (
-        character.settings?.secrets?.OPENAI_API_KEY || settings.OPENAI_API_KEY
+        character.settings?.secrets?.OPENAI_API_KEY ||
+        settings.OPENAI_API_KEY
+      );
+    case ModelProviderName.ETERNALAI:
+      return (
+        character.settings?.secrets?.ETERNALAI_API_KEY ||
+        settings.ETERNALAI_API_KEY
       );
     case ModelProviderName.LLAMACLOUD:
+    case ModelProviderName.TOGETHER:
       return (
         character.settings?.secrets?.LLAMACLOUD_API_KEY ||
         settings.LLAMACLOUD_API_KEY ||
@@ -76,6 +90,7 @@ export function getTokenForProvider(
         character.settings?.secrets?.OPENAI_API_KEY ||
         settings.OPENAI_API_KEY
       );
+    case ModelProviderName.CLAUDE_VERTEX:
     case ModelProviderName.ANTHROPIC:
       return (
         character.settings?.secrets?.ANTHROPIC_API_KEY ||
@@ -85,19 +100,76 @@ export function getTokenForProvider(
       );
     case ModelProviderName.REDPILL:
       return (
-        character.settings?.secrets?.REDPILL_API_KEY || settings.REDPILL_API_KEY
+        character.settings?.secrets?.REDPILL_API_KEY ||
+        settings.REDPILL_API_KEY
       );
     case ModelProviderName.OPENROUTER:
       return (
-        character.settings?.secrets?.OPENROUTER || settings.OPENROUTER_API_KEY
+        character.settings?.secrets?.OPENROUTER ||
+        settings.OPENROUTER_API_KEY
       );
     case ModelProviderName.GROK:
-      return character.settings?.secrets?.GROK_API_KEY || settings.GROK_API_KEY;
+      return (
+        character.settings?.secrets?.GROK_API_KEY ||
+        settings.GROK_API_KEY
+      );
     case ModelProviderName.HEURIST:
       return (
-        character.settings?.secrets?.HEURIST_API_KEY || settings.HEURIST_API_KEY
+        character.settings?.secrets?.HEURIST_API_KEY ||
+        settings.HEURIST_API_KEY
       );
     case ModelProviderName.GROQ:
-      return character.settings?.secrets?.GROQ_API_KEY || settings.GROQ_API_KEY;
+      return (
+        character.settings?.secrets?.GROQ_API_KEY ||
+        settings.GROQ_API_KEY
+      );
+    case ModelProviderName.GALADRIEL:
+      return (
+        character.settings?.secrets?.GALADRIEL_API_KEY ||
+        settings.GALADRIEL_API_KEY
+      );
+    case ModelProviderName.FAL:
+      return (
+        character.settings?.secrets?.FAL_API_KEY || settings.FAL_API_KEY
+      );
+    case ModelProviderName.ALI_BAILIAN:
+      return (
+        character.settings?.secrets?.ALI_BAILIAN_API_KEY ||
+        settings.ALI_BAILIAN_API_KEY
+      );
+    case ModelProviderName.VOLENGINE:
+      return (
+        character.settings?.secrets?.VOLENGINE_API_KEY ||
+        settings.VOLENGINE_API_KEY
+      );
+    case ModelProviderName.NANOGPT:
+      return (
+        character.settings?.secrets?.NANOGPT_API_KEY ||
+        settings.NANOGPT_API_KEY
+      );
+    case ModelProviderName.HYPERBOLIC:
+      return (
+        character.settings?.secrets?.HYPERBOLIC_API_KEY ||
+        settings.HYPERBOLIC_API_KEY
+      );
+    case ModelProviderName.VENICE:
+      return (
+        character.settings?.secrets?.VENICE_API_KEY ||
+        settings.VENICE_API_KEY
+      );
+    case ModelProviderName.AKASH_CHAT_API:
+      return (
+        character.settings?.secrets?.AKASH_CHAT_API_KEY ||
+        settings.AKASH_CHAT_API_KEY
+      );
+    case ModelProviderName.GOOGLE:
+      return (
+        character.settings?.secrets?.GOOGLE_GENERATIVE_AI_API_KEY ||
+        settings.GOOGLE_GENERATIVE_AI_API_KEY
+      );
+    default:
+      const errorMessage = `Failed to get token - unsupported model provider: ${provider}`;
+      elizaLogger.error(errorMessage);
+      throw new Error(errorMessage);
   }
 }
