@@ -5,7 +5,7 @@ export const character: Character = {
     // name: "Eliza",
     // plugins: [],
     clients: [Clients.TELEGRAM],
-    modelProvider: ModelProviderName.AKASH_CHAT_API,
+    modelProvider: ModelProviderName.OLLAMA,
     // settings: {
     //     secrets: {},
     //     voice: {
